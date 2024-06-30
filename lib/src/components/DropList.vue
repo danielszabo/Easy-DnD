@@ -3,7 +3,7 @@ import { TransitionGroup, h } from 'vue';
 import DropMixin, { dropAllowed, doDrop, candidate } from '../mixins/DropMixin';
 import DragFeedback from './DragFeedback.vue';
 import Grid from '../js/Grid';
-import { InsertEvent, ReorderEvent } from '../js/events';
+import { InsertEvent, ReorderEvent, IndexChangeEvent } from '../js/events';
 import { createDragImage } from '../js/createDragImage';
 import { dnd } from '../js/DnD';
 
@@ -36,7 +36,7 @@ export default {
       default: undefined
     }
   },
-  emits: ['reorder', 'insert'],
+  emits: ['reorder', 'insert', 'closest-index-change'],
   data () {
     return {
       grid: null,
@@ -44,6 +44,11 @@ export default {
       feedbackKey: null,
       fromIndex: null
     };
+  },
+  watch:{
+    closestIndex (newVal, oldVal){
+      this.$emit('closest-index-change', new IndexChangeEvent (oldVal,newVal));
+    },
   },
   computed: {
     rootTag () {
