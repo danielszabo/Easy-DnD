@@ -7,6 +7,7 @@ Event Name | Description
 (Refer to `Drop` component) | DropList components also emit all events by Drop components
 `@insert` | Triggered when data is to be inserted into the list (properties : `type`, `data` and `index`). If no listener is provided for this event, the list cannot be inserted into.
 `@reorder` | Triggers when data needs to be reordered (properties : `from`, `to` and `apply` - apply is a function that applies the required reordering to the given array). If no listener is provided for this event, the list cannot be reordered.
+`@closest-index-change` | Triggers as list telegraphs drop positions to the user as they drag over list items, but before the drop is made (properties : `priorIndex`, `currentIndex`) and before insert or reorder are called.  Useful for triggering sounds/animations as user drags item over list items.
 
 ## Props
 Prop Name | Type / Default | Description

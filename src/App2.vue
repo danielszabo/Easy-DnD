@@ -14,13 +14,17 @@
           </drag>
         </div>
       </div>
+      
       <div class="col">
         <drop-list
+          ref="dropit"
           :items="items"
           accepts-type="test"
           class="list"
           @insert="onInsert"
           @reorder="$event.apply(items)"
+          @closest-index-change="onClosestIndexChange"
+          @dragover="onDragover"
         >
           <template #item="{item, reorder}">
             <drag
@@ -40,11 +44,18 @@
           </template>
         </drop-list>
       </div>
+
       <drop
         class="col"
         style="background-color: grey"
         mode="cut"
       />
+    </div>
+    <div class='indexes'>
+      <small>
+        Previous Index: {{ prevIndex }}
+        Current Index: {{ newIndex }}
+      </small>
     </div>
   </Page>
 </template>
@@ -61,6 +72,8 @@ export default {
   components: { Page, Drop, Drag, DropList },
   data () {
     return {
+      prevIndex : null,
+      newIndex : null,
       items: ['a', 'b', 'c', 'd', 'e']
     };
   },
@@ -68,6 +81,12 @@ export default {
     onInsert (event) {
       console.log('on insert');
       this.items.splice(event.index, 0, event.data);
+    },
+    onClosestIndexChange (event){
+      console.log(event);
+    },
+    onDragover (event) {
+      console.log(event);
     }
   }
 };
@@ -116,6 +135,9 @@ export default {
                     transform: translate(-50%, -50%);
                 }
             }
+        }
+        .indexes{
+          text-align: center;
         }
     }
 </style>
